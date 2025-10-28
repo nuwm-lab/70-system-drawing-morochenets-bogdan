@@ -15,6 +15,16 @@ namespace WindowsFormsApp1
             this.DoubleBuffered = true;
         }
 
+        // Міні-реалізація InitializeComponent, щоб проект компілювався без дизайнерських файлів.
+        // Налаштовує розміри форми та підписує подію Load.
+        private void InitializeComponent()
+        {
+            this.ClientSize = new Size(800, 600);
+            this.StartPosition = FormStartPosition.CenterScreen;
+            this.Load += Form1_Load;
+            this.Text = "Графік функції";
+        }
+
         private void Form1_Load(object sender, EventArgs e)
         {
             // === ЗМІНА 1: Оновлено заголовок ===
@@ -99,9 +109,7 @@ namespace WindowsFormsApp1
                     g.DrawLine(graphPen, prev.Value, new PointF(px, py));
 
                 prev = new PointF(px, py);
-            }
-
-            
+            }           
             // Підписи осей
             Font font = new Font("Arial", 10);
             g.DrawString("X", font, Brushes.Black, w - margin + 10, h - margin - 10);
@@ -110,6 +118,18 @@ namespace WindowsFormsApp1
 
             // Малюємо рамку навколо графіка, як у твоєму прикладі
             g.DrawRectangle(Pens.Gray, margin, margin, plotW, plotH);
+        }
+    }
+
+    static class Program
+    {
+        [STAThread]
+        static void Main()
+        {
+            Application.SetHighDpiMode(HighDpiMode.SystemAware);
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new Form1());
         }
     }
 }
